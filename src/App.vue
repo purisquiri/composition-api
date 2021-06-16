@@ -1,5 +1,6 @@
 <template>
   <p>{{ num }}</p>
+  <p>{{ double }}</p>
   <button type="button" @click.prevent="addNum">Add</button>
   <p>{{ name }}</p>
 
@@ -8,7 +9,7 @@
 </template>
 
 <script>
-import { ref, reactive, toRefs, watchEffect } from "vue";
+import { ref, reactive, toRefs, watchEffect, computed } from "vue";
 
 // let num = ref(null);
 
@@ -21,6 +22,10 @@ export default {
       num.value++;
       //values must be accessed via the value property
     }
+
+    const double = computed(() => {
+      return num.value * 2;
+    });
 
     const user = reactive({
       name: "Mauro",
@@ -52,7 +57,7 @@ export default {
         .join("");
     });
 
-    return { num, addNum, ...toRefs(user), phrase, reversedPhrase };
+    return { num, addNum, ...toRefs(user), phrase, reversedPhrase, double };
     //toRefs allows you to use spread operator and mantain reactivity
   },
 };
