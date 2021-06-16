@@ -1,11 +1,14 @@
 <template>
   <p>{{ num }}</p>
   <button type="button" @click.prevent="addNum">Add</button>
-  <p>{{ user.name }}</p>
+  <p>{{ name }}</p>
+
+  <input type="text" v-model="phrase" />
+  <p>{{ reversedPhrase }}</p>
 </template>
 
 <script>
-import { ref, reactive } from "vue";
+import { ref, reactive, toRefs, watchEffect } from "vue";
 
 // let num = ref(null);
 
@@ -16,18 +19,41 @@ export default {
 
     function addNum() {
       num.value++;
+      //values must be accessed via the value property
     }
 
     const user = reactive({
       name: "Mauro",
       age: 40,
+
+      //values from properties can be accessed directly
     });
 
     setTimeout(() => {
       user.name = "John";
     }, 3000);
 
-    return { num, addNum, user };
+    const phrase = ref("");
+
+    const reversedPhrase = ref("");
+
+    // watch([phrase], ([newVal], [oldVal]) => {
+    //   reversedPhrase.value = phrase.value
+    //     .split("")
+    //     .reverse()
+    //     .join("");
+    // })
+    //when you have more variables to take care
+
+    watchEffect(() => {
+      reversedPhrase.value = phrase.value
+        .split("")
+        .reverse()
+        .join("");
+    });
+
+    return { num, addNum, ...toRefs(user), phrase, reversedPhrase };
+    //toRefs allows you to use spread operator and mantain reactivity
   },
 };
 </script>
