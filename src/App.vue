@@ -8,6 +8,8 @@
   <p>{{ reversedPhrase }}</p>
 
   <app-alert :user="user" />
+
+  <button type="butoon" ref="btn">Button</button>
 </template>
 
 <script>
@@ -29,12 +31,18 @@ export default {
     AppAlert,
   },
   setup() {
+    const btn = ref(null);
+
     onBeforeMount(() => {
       console.log("onBeforeMount");
     });
 
     onMounted(() => {
       console.log("onMounted");
+
+      btn.value.addEventListener("click", () => {
+        console.log("button clicked");
+      });
     });
 
     let num = ref(0);
@@ -86,6 +94,7 @@ export default {
       reversedPhrase,
       double,
       user,
+      btn,
     };
     //toRefs allows you to use spread operator and mantain reactivity
   },
