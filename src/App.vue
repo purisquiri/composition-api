@@ -51,7 +51,7 @@ export default {
     }, 3000);
 
     const { num, addNum, double } = useNumber();
-    const { phrase, reversedPhrase } = usePhrase();
+    const { phrase, reversedPhrase, num: phraseNum } = usePhrase();
 
     return {
       num,
@@ -62,6 +62,7 @@ export default {
       double,
       user,
       btn,
+      phraseNum,
     };
     //toRefs allows you to use spread operator and mantain reactivity
   },

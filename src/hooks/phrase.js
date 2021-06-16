@@ -4,6 +4,7 @@ export const usePhrase = () => {
   const phrase = ref("");
 
   const reversedPhrase = ref("");
+  const num = ref("");
 
   // watch([phrase], ([newVal], [oldVal]) => {
   //   reversedPhrase.value = phrase.value
@@ -23,5 +24,6 @@ export const usePhrase = () => {
   return {
     phrase,
     reversedPhrase,
+    num,
   };
 };
