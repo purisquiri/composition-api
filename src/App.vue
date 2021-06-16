@@ -6,16 +6,37 @@
 
   <input type="text" v-model="phrase" />
   <p>{{ reversedPhrase }}</p>
+
+  <app-alert :user="user" />
 </template>
 
 <script>
-import { ref, reactive, toRefs, watchEffect, computed } from "vue";
+import {
+  ref,
+  reactive,
+  toRefs,
+  watchEffect,
+  computed,
+  onBeforeMount,
+  onMounted,
+} from "vue";
 
-// let num = ref(null);
+import AppAlert from "@/components/Alert.vue";
 
 export default {
   name: "App",
+  components: {
+    AppAlert,
+  },
   setup() {
+    onBeforeMount(() => {
+      console.log("onBeforeMount");
+    });
+
+    onMounted(() => {
+      console.log("onMounted");
+    });
+
     let num = ref(0);
 
     function addNum() {
@@ -57,7 +78,15 @@ export default {
         .join("");
     });
 
-    return { num, addNum, ...toRefs(user), phrase, reversedPhrase, double };
+    return {
+      num,
+      addNum,
+      ...toRefs(user),
+      phrase,
+      reversedPhrase,
+      double,
+      user,
+    };
     //toRefs allows you to use spread operator and mantain reactivity
   },
 };
