@@ -13,17 +13,11 @@
 </template>
 
 <script>
-import {
-  ref,
-  reactive,
-  toRefs,
-  watchEffect,
-  computed,
-  onBeforeMount,
-  onMounted,
-} from "vue";
+import { ref, reactive, toRefs, onBeforeMount, onMounted } from "vue";
 
 import AppAlert from "@/components/Alert.vue";
+import { useNumber } from "./hooks/number";
+import { usePhrase } from "./hooks/phrase";
 
 export default {
   name: "App",
@@ -45,17 +39,6 @@ export default {
       });
     });
 
-    let num = ref(0);
-
-    function addNum() {
-      num.value++;
-      //values must be accessed via the value property
-    }
-
-    const double = computed(() => {
-      return num.value * 2;
-    });
-
     const user = reactive({
       name: "Mauro",
       age: 40,
@@ -67,24 +50,8 @@ export default {
       user.name = "John";
     }, 3000);
 
-    const phrase = ref("");
-
-    const reversedPhrase = ref("");
-
-    // watch([phrase], ([newVal], [oldVal]) => {
-    //   reversedPhrase.value = phrase.value
-    //     .split("")
-    //     .reverse()
-    //     .join("");
-    // })
-    //when you have more variables to take care
-
-    watchEffect(() => {
-      reversedPhrase.value = phrase.value
-        .split("")
-        .reverse()
-        .join("");
-    });
+    const { num, addNum, double } = useNumber();
+    const { phrase, reversedPhrase } = usePhrase();
 
     return {
       num,
